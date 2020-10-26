@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property integer $id
@@ -18,6 +19,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Product extends Model
 {
+    use SoftDeletes;
+
     /**
      * The "type" of the auto-incrementing ID.
      *
@@ -28,13 +31,32 @@ class Product extends Model
     /**
      * @var array
      */
-    protected $fillable = ['name', 'price', 'is_published', 'deleted_at', 'created_at', 'updated_at'];
+    protected $fillable = ['name', 'price', 'is_published'];
 
     /**
-     * @return BelongsTo
+     *
      */
     public function category()
     {
-        return $this->belongsTo('App\Models\Category');
+        return $this->hasMany(
+            'App\Models\ProductCategory',
+            'product_id',
+
+        );
+    }
+
+    /**
+     *
+     */
+    public function categories()
+    {
+        return $this->hasManyThrough(
+            'App\Models\Category',
+            'App\Models\ProductCategory',
+            'product_id',
+            'id',
+            'id',
+            'category_id'
+        );
     }
 }

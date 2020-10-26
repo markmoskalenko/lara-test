@@ -9,12 +9,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property string $created_at
  * @property string $updated_at
+ *
+ * @property Category[] $categories
  */
 class Category extends Model
 {
     /**
      * The "type" of the auto-incrementing ID.
-     * 
+     *
      * @var string
      */
     protected $keyType = 'integer';

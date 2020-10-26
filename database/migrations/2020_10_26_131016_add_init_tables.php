@@ -25,7 +25,7 @@ class AddInitTables extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('price');
-            $table->decimal('is_published');
+            $table->boolean('is_published')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });
